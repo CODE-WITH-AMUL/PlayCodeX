@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learn to Code | Choose Your Path</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #4a6bff;
+      --primary-light: #6a8bff;
+      --primary-dark: #3a56d4;
+      --secondary: #ff6b6b;
+      --accent: #9c6bff;
+      --dark: #1e1e1e;
+      --light: #ffffff;
+      --gray: #6c757d;
+      --light-gray: #f5f7fa;
+      --dark-gray: #2d2d2d;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --card-shadow: 0 6px 16px rgba(74, 107, 255, 0.1);
+    }
+
+    .dark-mode {
+      --primary: #5d7bff;
+      --primary-light: #7d9bff;
+      --primary-dark: #4a66e4;
+      --dark: #f5f7fa;
+      --light: #121212;
+      --gray: #adb5bd;
+      --light-gray: #1e1e1e;
+      --dark-gray: #0d0d0d;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      --card-shadow: 0 6px 16px rgba(93, 123, 255, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
+      transition: var(--transition);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      background-color: var(--light);
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      letter-spacing: -0.5px;
+    }
+
+    .logo-icon {
+      font-size: 1.8rem;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: var(--gray);
+      transition: var(--transition);
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+
+    .theme-toggle:hover {
+      color: var(--primary);
+      background-color: rgba(74, 107, 255, 0.1);
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 2rem 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .welcome-section {
+      text-align: center;
+      margin-bottom: 2rem;
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      color: var(--gray);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto 1.5rem;
+      line-height: 1.6;
+    }
+
+    .search-container {
+      position: relative;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+      animation: fadeIn 0.6s ease-out 0.2s both;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.9rem 1rem 0.9rem 3rem;
+      border: 2px solid rgba(0, 0, 0, 0.1);
+      border-radius: 50px;
+      font-size: 1rem;
+      transition: var(--transition);
+      background-color: var(--light);
+      color: var(--dark);
+      font-weight: 500;
+    }
+
+    .dark-mode .search-input {
+      border-color: rgba(255, 255, 255, 0.1);
+      background-color: var(--light);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(74, 107, 255, 0.2);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray);
+    }
+
+    .categories-tabs {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding: 0.5rem 0;
+      margin-bottom: 1.5rem;
+      scrollbar-width: none;
+    }
+
+    .categories-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .category-tab {
+      padding: 0.6rem 1.2rem;
+      border-radius: 50px;
+      background-color: var(--light-gray);
+      color: var(--gray);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition);
+      white-space: nowrap;
+      border: none;
+    }
+
+    .category-tab.active {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .category-tab:hover:not(.active) {
+      background-color: rgba(74, 107, 255, 0.1);
+      color: var(--primary);
+    }
+
+    .categories-container {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    .category-section {
+      margin-bottom: 1rem;
+      animation: fadeIn 0.6s ease-out 0.4s both;
+    }
+
+    .category-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .category-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--dark);
+      letter-spacing: -0.5px;
+    }
+
+    .view-all {
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: var(--transition);
+    }
+
+    .view-all:hover {
+      color: var(--primary-dark);
+    }
+
+    .view-all i {
+      font-size: 0.8rem;
+      transition: var(--transition);
+    }
+
+    .view-all:hover i {
+      transform: translateX(3px);
+    }
+
+    .languages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .language-card {
+      background-color: var(--light);
+      border-radius: 16px;
+      padding: 1.8rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--card-shadow);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      animation: fadeInUp 0.6s ease-out;
+      animation-fill-mode: both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dark-mode .language-card {
+      border-color: rgba(255, 255, 255, 0.05);
+      background-color: var(--dark-gray);
+    }
+
+    .language-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .language-card:hover::before {
+      opacity: 1;
+    }
+
+    .language-card:nth-child(1) { animation-delay: 0.1s; }
+    .language-card:nth-child(2) { animation-delay: 0.2s; }
+    .language-card:nth-child(3) { animation-delay: 0.3s; }
+    .language-card:nth-child(4) { animation-delay: 0.4s; }
+    .language-card:nth-child(5) { animation-delay: 0.5s; }
+    .language-card:nth-child(6) { animation-delay: 0.6s; }
+    .language-card:nth-child(7) { animation-delay: 0.7s; }
+    .language-card:nth-child(8) { animation-delay: 0.8s; }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes cardHover {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+      100% { transform: translateY(0); }
+    }
+
+    .language-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(74, 107, 255, 0.15);
+      animation: cardHover 0.8s ease infinite;
+    }
+
+    .dark-mode .language-card:hover {
+      box-shadow: 0 12px 24px rgba(93, 123, 255, 0.25);
+    }
+
+    .language-icon {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 1.2rem;
+      object-fit: contain;
+      transition: var(--transition);
+    }
+
+    .language-card:hover .language-icon {
+      transform: scale(1.1);
+    }
+
+    .language-name {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+      color: var(--dark);
+    }
+
+    .language-desc {
+      font-size: 0.85rem;
+      color: var(--gray);
+      line-height: 1.5;
+    }
+
+    .difficulty {
+      display: flex;
+      gap: 0.3rem;
+      margin-top: 0.8rem;
+    }
+
+    .difficulty-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--gray);
+      opacity: 0.3;
+    }
+
+    .difficulty-dot.active {
+      opacity: 1;
+      background-color: var(--primary);
+    }
+
+    .nav-bar {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0.8rem 0;
+      background-color: var(--light);
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      bottom: 0;
+      z-index: 100;
+    }
+
+    .dark-mode .nav-bar {
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+      background-color: var(--dark-gray);
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      color: var(--gray);
+      font-size: 0.8rem;
+      transition: var(--transition);
+      position: relative;
+      padding: 0.5rem 1rem;
+      flex: 1;
+      max-width: 100px;
+    }
+
+    .nav-item i {
+      font-size: 1.4rem;
+      margin-bottom: 0.3rem;
+      transition: var(--transition);
+    }
+
+    .nav-item.active {
+      color: var(--primary);
+    }
+
+    .nav-item.active i {
+      transform: translateY(-5px);
+    }
+
+    .nav-item::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 3px;
+      background-color: var(--primary);
+      border-radius: 3px 3px 0 0;
+      transition: var(--transition);
+    }
+
+    .nav-item.active::after {
+      width: 80%;
+    }
+
+    .nav-item .notification-badge {
+      position: absolute;
+      top: 0;
+      right: 15px;
+      background-color: var(--secondary);
+      color: white;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      font-weight: bold;
+    }
+
+    /* Floating action button */
+    .fab {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 20px rgba(74, 107, 255, 0.3);
+      cursor: pointer;
+      z-index: 90;
+      transition: var(--transition);
+      border: none;
+    }
+
+    .fab:hover {
+      transform: scale(1.1) rotate(10deg);
+      box-shadow: 0 6px 24px rgba(74, 107, 255, 0.4);
+    }
+
+    /* Responsive adjustments */
+    @media (min-width: 768px) {
+      .header {
+        padding: 1rem 3rem;
+      }
+      
+      .main-content {
+        padding: 3rem;
+      }
+      
+      .languages-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      }
+      
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      .category-title {
+        font-size: 1.7rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .languages-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      }
+    }
+
+    @media (max-width: 480px) {
+      .languages-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 1rem;
+      }
+      
+      .language-card {
+        padding: 1.5rem 0.8rem;
+      }
+      
+      .language-icon {
+        width: 50px;
+        height: 50px;
+      }
+
+      .category-title {
+        font-size: 1.3rem;
+      }
+
+      .subtitle {
+        font-size: 1rem;
+      }
+    }
+
+    /* Loading skeleton */
+    .skeleton {
+      animation: skeleton-loading 1.5s linear infinite alternate;
+      opacity: 0.7;
+      border-radius: 8px;
+    }
+
+    @keyframes skeleton-loading {
+      0% { background-color: rgba(0, 0, 0, 0.05); }
+      100% { background-color: rgba(0, 0, 0, 0.15); }
+    }
+
+    .dark-mode .skeleton {
+      animation: skeleton-loading-dark 1.5s linear infinite alternate;
+    }
+
+    @keyframes skeleton-loading-dark {
+      0% { background-color: rgba(255, 255, 255, 0.05); }
+      100% { background-color: rgba(255, 255, 255, 0.15); }
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 2rem;
+      color: var(--gray);
+    }
+
+    .empty-state i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <span>PlayCodeX</span>
+    </div>
+    <button class="theme-toggle" id="themeToggle">
+      <i class="fas fa-moon"></i>
+    </button>
+  </header>
+
+  <main class="main-content">
+    <div class="welcome-section">
+      <h1>Start Your Coding Journey</h1>
+      <p class="subtitle">Choose a programming language or technology to begin learning with interactive exercises</p>
+      
+      <div class="search-container">
+        <input type="text" class="search-input" placeholder="Search languages, frameworks...">
+        <i class="fas fa-search search-icon"></i>
+      </div>
+    </div>
+
+    <div class="categories-tabs" id="categoryTabs">
+      <button class="category-tab active" data-category="all">All</button>
+      <button class="category-tab" data-category="popular">Popular</button>
+      <button class="category-tab" data-category="web">Web Dev</button>
+      <button class="category-tab" data-category="ai">AI/ML</button>
+      <button class="category-tab" data-category="mobile">Mobile</button>
+      <button class="category-tab" data-category="game">Game Dev</button>
+      <button class="category-tab" data-category="data">Data</button>
+      <button class="category-tab" data-category="cloud">Cloud</button>
+    </div>
+
+    <div class="categories-container" id="categoriesContainer">
+      <!-- Categories will be dynamically shown based on selection -->
+    </div>
+  </main>
+
+  <button class="fab" id="helpFab">
+    <i class="fas fa-question"></i>
+  </button>
+
+  <nav class="nav-bar">
+    <a href="#" class="nav-item active">
+      <i class="fas fa-book-open"></i>
+      <span>Learn</span>
+    </a>
+    <a href="#" class="nav-item">
+      <i class="fas fa-laptop-code"></i>
+      <span>Practice</span>
+    </a>
+    <a href="#" class="nav-item">
+      <i class="fas fa-trophy"></i>
+      <span>Challenges</span>
+    </a>
+    <a href="#" class="nav-item">
+      <i class="fas fa-user"></i>
+      <span>Profile</span>
+    </a>
+  </nav>
+
+  <script>
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+    
+    // Check for saved theme preference or use preferred color scheme
+    const savedTheme = localStorage.getItem('theme') || 
+                      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    
+    if (savedTheme === 'dark') {
+      body.classList.add('dark-mode');
+      themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    } else {
+      themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+    }
+    
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('dark-mode');
+      const isDark = body.classList.contains('dark-mode');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      themeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+    });
+
+    // Navigation active state
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        navItems.forEach(nav => nav.classList.remove('active'));
+        item.classList.add('active');
+      });
+    });
+
+    // Language data with difficulty levels and categories
+    const allLanguages = {
+      popular: [
+        { 
+          name: "Python", 
+          desc: "Beginner-friendly language for all purposes", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+          difficulty: 1,
+          categories: ['ai', 'data', 'web']
+        },
+        { 
+          name: "JavaScript", 
+          desc: "The language of the web", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+          difficulty: 2,
+          categories: ['web', 'mobile']
+        },
+        { 
+          name: "Java", 
+          desc: "Enterprise applications and Android", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
+          difficulty: 3,
+          categories: ['mobile', 'web']
+        },
+        { 
+          name: "C++", 
+          desc: "High-performance system programming", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg",
+          difficulty: 4,
+          categories: ['game']
+        },
+        { 
+          name: "C#", 
+          desc: "Windows development and games", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg",
+          difficulty: 3,
+          categories: ['game']
+        },
+        { 
+          name: "Swift", 
+          desc: "Build iOS and macOS apps", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg",
+          difficulty: 2,
+          categories: ['mobile']
+        },
+        { 
+          name: "Kotlin", 
+          desc: "Modern Android development", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg",
+          difficulty: 2,
+          categories: ['mobile']
+        },
+        { 
+          name: "Go", 
+          desc: "Efficient cloud services", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg",
+          difficulty: 3,
+          categories: ['cloud']
+        }
+      ],
+      web: [
+        { 
+          name: "HTML", 
+          desc: "Structure of web pages", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+          difficulty: 1
+        },
+        { 
+          name: "CSS", 
+          desc: "Styling for the web", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
+          difficulty: 2
+        },
+        { 
+          name: "React", 
+          desc: "Popular frontend framework", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+          difficulty: 3
+        },
+        { 
+          name: "Angular", 
+          desc: "Enterprise frontend framework", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg",
+          difficulty: 4
+        },
+        { 
+          name: "Vue", 
+          desc: "Progressive JavaScript framework", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg",
+          difficulty: 2
+        },
+        { 
+          name: "Node.js", 
+          desc: "JavaScript on the server", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
+          difficulty: 3
+        },
+        { 
+          name: "Django", 
+          desc: "Python web framework", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg",
+          difficulty: 3
+        },
+        { 
+          name: "Ruby on Rails", 
+          desc: "Developer-friendly framework", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rails/rails-original-wordmark.svg",
+          difficulty: 3
+        }
+      ],
+      ai: [
+        { 
+          name: "Python", 
+          desc: "Primary language for ML/AI", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+          difficulty: 2
+        },
+        { 
+          name: "R", 
+          desc: "Statistical computing", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/r/r-original.svg",
+          difficulty: 3
+        },
+        { 
+          name: "TensorFlow", 
+          desc: "Machine learning framework", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg",
+          difficulty: 4
+        },
+        { 
+          name: "PyTorch", 
+          desc: "Deep learning framework", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg",
+          difficulty: 4
+        },
+        { 
+          name: "Pandas", 
+          desc: "Data analysis library", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg",
+          difficulty: 2
+        },
+        { 
+          name: "NumPy", 
+          desc: "Numerical computing", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg",
+          difficulty: 3
+        },
+        { 
+          name: "Julia", 
+          desc: "High-performance computing", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/julia/julia-original.svg",
+          difficulty: 4
+        },
+        { 
+          name: "OpenCV", 
+          desc: "Computer vision", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg",
+          difficulty: 4
+        }
+      ],
+      mobile: [
+        { 
+          name: "Swift", 
+          desc: "iOS and macOS development", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg",
+          difficulty: 2
+        },
+        { 
+          name: "Kotlin", 
+          desc: "Modern Android development", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg",
+          difficulty: 2
+        },
+        { 
+          name: "Flutter", 
+          desc: "Cross-platform framework", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg",
+          difficulty: 3
+        },
+        { 
+          name: "React Native", 
+          desc: "JavaScript mobile apps", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+          difficulty: 3
+        },
+        { 
+          name: "Java", 
+          desc: "Traditional Android", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
+          difficulty: 3
+        },
+        { 
+          name: "Dart", 
+          desc: "Language for Flutter", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg",
+          difficulty: 2
+        },
+        { 
+          name: "Ionic", 
+          desc: "Hybrid mobile apps", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ionic/ionic-original.svg",
+          difficulty: 3
+        },
+        { 
+          name: "Xamarin", 
+          desc: ".NET mobile development", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/xamarin/xamarin-original.svg",
+          difficulty: 3
+        }
+      ],
+      game: [
+        { 
+          name: "C++", 
+          desc: "Game engines and performance", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg",
+          difficulty: 4
+        },
+        { 
+          name: "C#", 
+          desc: "Unity game development", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg",
+          difficulty: 3
+        },
+        { 
+          name: "Unity", 
+          desc: "Popular game engine", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/unity/unity-original.svg",
+          difficulty: 3
+        },
+        { 
+          name: "Unreal", 
+          desc: "AAA game engine", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/unrealengine/unrealengine-original.svg",
+          difficulty: 4
+        },
+        { 
+          name: "Godot", 
+          desc: "Open-source game engine", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/godot/godot-original.svg",
+          difficulty: 2
+        },
+        { 
+          name: "JavaScript", 
+          desc: "Browser games", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+          difficulty: 2
+        },
+        { 
+          name: "Python", 
+          desc: "Game scripting", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+          difficulty: 2
+        },
+        { 
+          name: "Lua", 
+          desc: "Game scripting language", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/lua/lua-original.svg",
+          difficulty: 2
+        }
+      ],
+      data: [
+        { 
+          name: "Python", 
+          desc: "Data analysis and visualization", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+          difficulty: 2
+        },
+        { 
+          name: "R", 
+          desc: "Statistical computing", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/r/r-original.svg",
+          difficulty: 3
+        },
+        { 
+          name: "SQL", 
+          desc: "Database querying", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
+          difficulty: 2
+        },
+        { 
+          name: "Pandas", 
+          desc: "Data manipulation", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg",
+          difficulty: 2
+        },
+        { 
+          name: "NumPy", 
+          desc: "Numerical computing", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg",
+          difficulty: 3
+        },
+        { 
+          name: "Spark", 
+          desc: "Big data processing", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apache/apache-original.svg",
+          difficulty: 4
+        },
+        { 
+          name: "Tableau", 
+          desc: "Data visualization", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tableau/tableau-original.svg",
+          difficulty: 2
+        },
+        { 
+          name: "PowerBI", 
+          desc: "Business analytics", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/powerbi/powerbi-original.svg",
+          difficulty: 2
+        }
+      ],
+      cloud: [
+        { 
+          name: "AWS", 
+          desc: "Amazon Web Services", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg",
+          difficulty: 3
+        },
+        { 
+          name: "Azure", 
+          desc: "Microsoft Cloud", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg",
+          difficulty: 3
+        },
+        { 
+          name: "Google Cloud", 
+          desc: "GCP services", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg",
+          difficulty: 3
+        },
+        { 
+          name: "Docker", 
+          desc: "Containerization", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
+          difficulty: 3
+        },
+        { 
+          name: "Kubernetes", 
+          desc: "Container orchestration", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg",
+          difficulty: 4
+        },
+        { 
+          name: "Terraform", 
+          desc: "Infrastructure as code", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg",
+          difficulty: 4
+        },
+        { 
+          name: "Go", 
+          desc: "Cloud-native language", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg",
+          difficulty: 3
+        },
+        { 
+          name: "Serverless", 
+          desc: "Event-driven computing", 
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg",
+          difficulty: 3
+        }
+      ]
+    };
+
+    // Render difficulty dots
+    function renderDifficulty(difficulty) {
+      let html = '';
+      for (let i = 1; i <= 4; i++) {
+        html += `<div class="difficulty-dot ${i <= difficulty ? 'active' : ''}"></div>`;
+      }
+      return html;
+    }
+
+    // Render languages for a specific category
+        // Render languages for a specific category
+    function renderCategory(categoryId, languages) {
+      const container = document.createElement('div');
+      container.className = 'category-section';
+      container.id = `category-${categoryId}`;
+      
+      const categoryTitle =categoryId === 'popular' ? 'Popular Languages' : 
+                          categoryId === 'web' ? 'Web Development' :
+                          categoryId === 'ai' ? 'AI & Machine Learning' :
+                          categoryId === 'mobile' ? 'Mobile Development' :
+                          categoryId === 'game' ? 'Game Development' :
+                          categoryId === 'data' ? 'Data Science' :
+                          categoryId === 'cloud' ? 'Cloud & DevOps' : 'All Languages';
+      
+      let html = `
+        <div class="category-header">
+          <h2 class="category-title">${categoryTitle}</h2>
+          <a href="#" class="view-all">View all <i class="fas fa-chevron-right"></i></a>
+        </div>
+        <div class="languages-grid">
+      `;
+      
+      languages.forEach(lang => {
+        html += `
+          <div class="language-card" data-lang="${lang.name.toLowerCase()}">
+            <img src="${lang.icon}" alt="${lang.name}" class="language-icon">
+            <h3 class="language-name">${lang.name}</h3>
+            <p class="language-desc">${lang.desc}</p>
+            <div class="difficulty">
+              ${renderDifficulty(lang.difficulty)}
+            </div>
+          </div>
+        `;
+      });
+      
+      html += `</div>`;
+      container.innerHTML = html;
+      return container;
+    }
+
+    // Filter languages by category
+    function filterLanguages(category) {
+      const container = document.getElementById('categoriesContainer');
+      container.innerHTML = '';
+      
+      if (category === 'all') {
+        // Show all categories
+        for (const [categoryId, languages] of Object.entries(allLanguages)) {
+          container.appendChild(renderCategory(categoryId, languages));
+        }
+      } else {
+        // Show only the selected category
+        container.appendChild(renderCategory(category, allLanguages[category]));
+      }
+      
+      // Add click event to language cards
+      document.querySelectorAll('.language-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const langName = card.getAttribute('data-lang');
+          alert(`Starting learning path for ${langName}!`);
+          // In a real app, this would navigate to the language's learning page
+        });
+      });
+    }
+
+    // Initialize the app with all languages
+    filterLanguages('all');
+
+    // Category tab switching
+    const categoryTabs = document.querySelectorAll('.category-tab');
+    categoryTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        categoryTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        filterLanguages(tab.getAttribute('data-category'));
+      });
+    });
+
+    // Search functionality
+    const searchInput = document.querySelector('.search-input');
+    searchInput.addEventListener('input', (e) => {
+      const searchTerm = e.target.value.toLowerCase();
+      
+      document.querySelectorAll('.language-card').forEach(card => {
+        const langName = card.querySelector('.language-name').textContent.toLowerCase();
+        const langDesc = card.querySelector('.language-desc').textContent.toLowerCase();
+        
+        if (langName.includes(searchTerm) || langDesc.includes(searchTerm)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+
+    // Help FAB button
+    const helpFab = document.getElementById('helpFab');
+    helpFab.addEventListener('click', () => {
+      alert("Need help? Browse our tutorials or contact support!");
+    });
+
+    // Simulate loading (for demo purposes)
+    setTimeout(() => {
+      document.querySelectorAll('.skeleton').forEach(el => {
+        el.classList.remove('skeleton');
+      });
+    }, 1500);
+    
+  </script>
+</body>
+</html>
