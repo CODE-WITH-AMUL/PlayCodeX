@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Experience Slider</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f7f8fc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      transition: background-color 0.5s ease;
+    }
+
+    .container {
+      text-align: center;
+      padding: 20px;
+      max-width: 500px;
+      width: 90%;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .robot {
+      font-size: 80px;
+      margin-bottom: 20px;
+      display: inline-block;
+      transition: all 0.5s ease;
+      transform-origin: center bottom;
+    }
+
+    .robot:hover {
+      animation: bounce 0.8s;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .question {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #1f1f1f;
+      animation: slideIn 0.6s ease-out;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .slider-container {
+      width: 80%;
+      margin: 0 auto;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      margin: 15px 0;
+      accent-color: #7c3aed;
+      transition: all 0.3s ease;
+    }
+
+    input[type="range"]:hover {
+      transform: scaleY(1.2);
+    }
+
+    .labels {
+      display: flex;
+      justify-content: space-between;
+      font-weight: bold;
+      color: #333;
+      animation: fadeIn 1s ease-out;
+    }
+
+    .message {
+      margin-top: 10px;
+      font-size: 16px;
+      color: #666;
+      height: 24px;
+      transition: all 0.4s ease;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .btn {
+      margin-top: 30px;
+      padding: 15px 30px;
+      font-size: 16px;
+      color: white;
+      background-color: #7c3aed;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn:hover {
+      background-color: #5b21b6;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Animation for message change */
+    .message-change {
+      animation: messageFade 0.6s ease-out;
+    }
+
+    @keyframes messageFade {
+      0% { opacity: 1; transform: translateY(0); }
+      50% { opacity: 0; transform: translateY(-10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Animation for robot when slider changes */
+    .robot-excitement {
+      animation: robotJump 0.6s ease;
+    }
+
+    @keyframes robotJump {
+      0%, 100% { transform: scale(1); }
+      25% { transform: scale(1.1) rotate(-5deg); }
+      50% { transform: scale(1.15) rotate(5deg); }
+      75% { transform: scale(1.1) rotate(-5deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="question">How much coding experience do you have?</div>
+    <div class="robot">📘</div>
+    
+    <div class="slider-container">
+      <div class="labels">
+        <span>NONE</span>
+        <span>A LITTLE</span>
+        <span>A LOT</span>
+      </div>
+      <input type="range" id="experience" min="0" max="2" value="0">
+      <div class="message" id="message">You're about to start your journey</div>
+    </div>
+    
+    <button class="btn" ><a href="{% url 'info' %}">CONTINUE</a></button>
+  </div>
+
+  <script>
+    const slider = document.getElementById('experience');
+    const message = document.getElementById('message');
+    const robot = document.querySelector('.robot');
+    const body = document.querySelector('body');
+
+    slider.addEventListener('input', () => {
+      // Add animation class to message
+      message.classList.add('message-change');
+      
+      // Add animation to robot
+      robot.classList.add('robot-excitement');
+      
+      // Change background color slightly based on selection
+      const colors = ['#f7f8fc', '#f0f4ff', '#e8f0fe'];
+      body.style.backgroundColor = colors[slider.value];
+      
+      setTimeout(() => {
+        switch (slider.value) {
+          case '0':
+            message.textContent = "You're about to start your journey";
+            robot.textContent = "📘";
+            break;
+          case '1':
+            message.textContent = "You have some experience already";
+            robot.textContent = "💻";
+            break;
+          case '2':
+            message.textContent = "You're a coding ninja!";
+            robot.textContent = "🔥";
+            break;
+        }
+        
+        // Remove animation classes after they complete
+        setTimeout(() => {
+          message.classList.remove('message-change');
+          robot.classList.remove('robot-excitement');
+        }, 600);
+      }, 300);
+    });
+
+    // Add hover effect to robot
+    robot.addEventListener('mouseenter', () => {
+      robot.style.transform = 'scale(1.1)';
+    });
+    
+    robot.addEventListener('mouseleave', () => {
+      robot.style.transform = 'scale(1)';
+    });
+  </script>
+</body>
+</html>
