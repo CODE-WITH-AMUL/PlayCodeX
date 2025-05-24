@@ -20,6 +20,7 @@
       --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       --card-shadow: 0 6px 16px rgba(74, 107, 255, 0.1);
+      --beginner-badge: #28a745;
     }
 
     .dark-mode {
@@ -33,6 +34,7 @@
       --dark-gray: #0d0d0d;
       --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
       --card-shadow: 0 6px 16px rgba(93, 123, 255, 0.2);
+      --beginner-badge: #34c759;
     }
 
     * {
@@ -73,10 +75,6 @@
       letter-spacing: -0.5px;
     }
 
-    .logo-icon {
-      font-size: 1.8rem;
-    }
-
     .theme-toggle {
       background: none;
       border: none;
@@ -92,9 +90,11 @@
       border-radius: 50%;
     }
 
-    .theme-toggle:hover {
+    .theme-toggle:hover,
+    .theme-toggle:focus {
       color: var(--primary);
       background-color: rgba(74, 107, 255, 0.1);
+      outline: none;
     }
 
     .main-content {
@@ -142,6 +142,9 @@
       max-width: 500px;
       margin: 0 auto 2rem;
       animation: fadeIn 0.6s ease-out 0.2s both;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     .search-input {
@@ -175,6 +178,24 @@
       color: var(--gray);
     }
 
+    .clear-search {
+      background: var(--secondary);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: var(--transition);
+      display: none;
+    }
+
+    .clear-search:hover,
+    .clear-search:focus {
+      background: var(--secondary-dark);
+      outline: none;
+    }
+
     .categories-tabs {
       display: flex;
       gap: 0.5rem;
@@ -206,9 +227,11 @@
       color: white;
     }
 
-    .category-tab:hover:not(.active) {
+    .category-tab:hover:not(.active),
+    .category-tab:focus:not(.active) {
       background-color: rgba(74, 107, 255, 0.1);
       color: var(--primary);
+      outline: none;
     }
 
     .categories-container {
@@ -247,8 +270,10 @@
       transition: var(--transition);
     }
 
-    .view-all:hover {
+    .view-all:hover,
+    .view-all:focus {
       color: var(--primary-dark);
+      outline: none;
     }
 
     .view-all i {
@@ -256,7 +281,8 @@
       transition: var(--transition);
     }
 
-    .view-all:hover i {
+    .view-all:hover i,
+    .view-all:focus i {
       transform: translateX(3px);
     }
 
@@ -282,6 +308,8 @@
       animation-fill-mode: both;
       position: relative;
       overflow: hidden;
+      text-decoration: none;
+      color: inherit;
     }
 
     .dark-mode .language-card {
@@ -301,7 +329,8 @@
       transition: var(--transition);
     }
 
-    .language-card:hover::before {
+    .language-card:hover::before,
+    .language-card:focus::before {
       opacity: 1;
     }
 
@@ -319,19 +348,15 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes cardHover {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
-      100% { transform: translateY(0); }
-    }
-
-    .language-card:hover {
+    .language-card:hover,
+    .language-card:focus {
       transform: translateY(-5px);
       box-shadow: 0 12px 24px rgba(74, 107, 255, 0.15);
-      animation: cardHover 0.8s ease infinite;
+      outline: none;
     }
 
-    .dark-mode .language-card:hover {
+    .dark-mode .language-card:hover,
+    .dark-mode .language-card:focus {
       box-shadow: 0 12px 24px rgba(93, 123, 255, 0.25);
     }
 
@@ -343,7 +368,8 @@
       transition: var(--transition);
     }
 
-    .language-card:hover .language-icon {
+    .language-card:hover .language-icon,
+    .language-card:focus .language-icon {
       transform: scale(1.1);
     }
 
@@ -358,6 +384,7 @@
       font-size: 0.85rem;
       color: var(--gray);
       line-height: 1.5;
+      margin-bottom: 0.5rem;
     }
 
     .difficulty {
@@ -377,6 +404,40 @@
     .difficulty-dot.active {
       opacity: 1;
       background-color: var(--primary);
+    }
+
+    .language-meta {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      margin-top: 0.8rem;
+      font-size: 0.75rem;
+      color: var(--gray);
+    }
+
+    .language-type {
+      background-color: rgba(74, 107, 255, 0.1);
+      color: var(--primary);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .beginner-friendly {
+      background-color: var(--beginner-badge);
+      color: white;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.75rem;
+      margin-top: 0.5rem;
+      transition: var(--transition);
+    }
+
+    .beginner-friendly:hover,
+    .beginner-friendly:focus {
+      background-color: #218838;
+      transform: scale(1.05);
     }
 
     .nav-bar {
@@ -457,7 +518,6 @@
       font-weight: bold;
     }
 
-    /* Floating action button */
     .fab {
       position: fixed;
       bottom: 80px;
@@ -478,12 +538,13 @@
       border: none;
     }
 
-    .fab:hover {
+    .fab:hover,
+    .fab:focus {
       transform: scale(1.1) rotate(10deg);
       box-shadow: 0 6px 24px rgba(74, 107, 255, 0.4);
+      outline: none;
     }
 
-    /* Responsive adjustments */
     @media (min-width: 768px) {
       .header {
         padding: 1rem 3rem;
@@ -536,7 +597,6 @@
       }
     }
 
-    /* Loading skeleton */
     .skeleton {
       animation: skeleton-loading 1.5s linear infinite alternate;
       opacity: 0.7;
@@ -557,11 +617,11 @@
       100% { background-color: rgba(255, 255, 255, 0.15); }
     }
 
-    /* Empty state */
     .empty-state {
       text-align: center;
       padding: 2rem;
       color: var(--gray);
+      animation: fadeIn 0.6s ease-out;
     }
 
     .empty-state i {
@@ -576,7 +636,7 @@
     <div class="logo">
       <span>PlayCodeX</span>
     </div>
-    <button class="theme-toggle" id="themeToggle">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
       <i class="fas fa-moon"></i>
     </button>
   </header>
@@ -587,33 +647,32 @@
       <p class="subtitle">Choose a programming language or technology to begin learning with interactive exercises</p>
       
       <div class="search-container">
-        <input type="text" class="search-input" placeholder="Search languages, frameworks...">
         <i class="fas fa-search search-icon"></i>
+        <input type="text" class="search-input" id="searchInput" placeholder="Search languages, frameworks, or types..." aria-label="Search languages and frameworks">
+        <button class="clear-search" id="clearSearch" aria-label="Clear search">Clear</button>
       </div>
     </div>
 
-    <div class="categories-tabs" id="categoryTabs">
-      <button class="category-tab active" data-category="all">All</button>
-      <button class="category-tab" data-category="popular">Popular</button>
-      <button class="category-tab" data-category="web">Web Dev</button>
-      <button class="category-tab" data-category="ai">AI/ML</button>
-      <button class="category-tab" data-category="mobile">Mobile</button>
-      <button class="category-tab" data-category="game">Game Dev</button>
-      <button class="category-tab" data-category="data">Data</button>
-      <button class="category-tab" data-category="cloud">Cloud</button>
+    <div class="categories-tabs" id="categoryTabs" role="tablist">
+      <button class="category-tab active" data-category="all" role="tab" aria-selected="true">All</button>
+      <button class="category-tab" data-category="popular" role="tab" aria-selected="false">Popular</button>
+      <button class="category-tab" data-category="web" role="tab" aria-selected="false">Web Dev</button>
+      <button class="category-tab" data-category="ai" role="tab" aria-selected="false">AI/ML</button>
+      <button class="category-tab" data-category="mobile" role="tab" aria-selected="false">Mobile</button>
+      <button class="category-tab" data-category="game" role="tab" aria-selected="false">Game Dev</button>
+      <button class="category-tab" data-category="data" role="tab" aria-selected="false">Data</button>
+      <button class="category-tab" data-category="cloud" role="tab" aria-selected="false">Cloud</button>
     </div>
 
-    <div class="categories-container" id="categoriesContainer">
-      <!-- Categories will be dynamically shown based on selection -->
-    </div>
+    <div class="categories-container" id="categoriesContainer" aria-live="polite"></div>
   </main>
 
-  <button class="fab" id="helpFab">
+  <button class="fab" id="helpFab" aria-label="Get help">
     <i class="fas fa-question"></i>
   </button>
 
   <nav class="nav-bar">
-    <a href="#" class="nav-item active">
+    <a href="#" class="nav-item active" aria-current="page">
       <i class="fas fa-book-open"></i>
       <span>Learn</span>
     </a>
@@ -625,46 +684,14 @@
       <i class="fas fa-trophy"></i>
       <span>Challenges</span>
     </a>
-    <a href="#" class="nav-item">
+    <a href="{% url 'profile' %}" class="nav-item">
       <i class="fas fa-user"></i>
       <span>Profile</span>
     </a>
   </nav>
 
   <script>
-    // Theme toggle functionality
-    const themeToggle = document.getElementById('themeToggle');
-    const body = document.body;
-    
-    // Check for saved theme preference or use preferred color scheme
-    const savedTheme = localStorage.getItem('theme') || 
-                      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    
-    if (savedTheme === 'dark') {
-      body.classList.add('dark-mode');
-      themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-    } else {
-      themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-    }
-    
-    themeToggle.addEventListener('click', () => {
-      body.classList.toggle('dark-mode');
-      const isDark = body.classList.contains('dark-mode');
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
-      themeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-    });
-
-    // Navigation active state
-    const navItems = document.querySelectorAll('.nav-item');
-    navItems.forEach(item => {
-      item.addEventListener('click', (e) => {
-        e.preventDefault();
-        navItems.forEach(nav => nav.classList.remove('active'));
-        item.classList.add('active');
-      });
-    });
-
-    // Language data with difficulty levels and categories
+    // Language data with complete and consistent fields
     const allLanguages = {
       popular: [
         { 
@@ -672,56 +699,72 @@
           desc: "Beginner-friendly language for all purposes", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
           difficulty: 1,
-          categories: ['ai', 'data', 'web']
+          categories: ['ai', 'data', 'web', 'game'],
+          type: "Language",
+          url: "{% url "python" %}"
         },
         { 
           name: "JavaScript", 
           desc: "The language of the web", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
           difficulty: 2,
-          categories: ['web', 'mobile']
+          categories: ['web', 'mobile', 'game'],
+          type: "Language",
+          url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
         },
         { 
           name: "Java", 
           desc: "Enterprise applications and Android", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
           difficulty: 3,
-          categories: ['mobile', 'web']
+          categories: ['mobile', 'web'],
+          type: "Language",
+          url: "https://www.java.com"
         },
         { 
           name: "C++", 
           desc: "High-performance system programming", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg",
           difficulty: 4,
-          categories: ['game']
+          categories: ['game'],
+          type: "Language",
+          url: "https://isocpp.org"
         },
         { 
           name: "C#", 
           desc: "Windows development and games", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg",
           difficulty: 3,
-          categories: ['game']
+          categories: ['game'],
+          type: "Language",
+          url: "https://docs.microsoft.com/en-us/dotnet/csharp/"
         },
         { 
           name: "Swift", 
           desc: "Build iOS and macOS apps", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg",
           difficulty: 2,
-          categories: ['mobile']
+          categories: ['mobile'],
+          type: "Language",
+          url: "https://developer.apple.com/swift/"
         },
         { 
           name: "Kotlin", 
           desc: "Modern Android development", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg",
           difficulty: 2,
-          categories: ['mobile']
+          categories: ['mobile'],
+          type: "Language",
+          url: "https://kotlinlang.org"
         },
         { 
           name: "Go", 
           desc: "Efficient cloud services", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg",
           difficulty: 3,
-          categories: ['cloud']
+          categories: ['cloud'],
+          type: "Language",
+          url: "https://golang.org"
         }
       ],
       web: [
@@ -729,49 +772,73 @@
           name: "HTML", 
           desc: "Structure of web pages", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
-          difficulty: 1
+          difficulty: 1,
+          categories: ['web'],
+          type: "Markup",
+          url: "https://developer.mozilla.org/en-US/docs/Web/HTML"
         },
         { 
           name: "CSS", 
           desc: "Styling for the web", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
-          difficulty: 2
+          difficulty: 2,
+          categories: ['web'],
+          type: "Styling",
+          url: "https://developer.mozilla.org/en-US/docs/Web/CSS"
         },
         { 
           name: "React", 
           desc: "Popular frontend framework", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-          difficulty: 3
+          difficulty: 3,
+          categories: ['web'],
+          type: "Framework",
+          url: "https://reactjs.org"
         },
         { 
           name: "Angular", 
           desc: "Enterprise frontend framework", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg",
-          difficulty: 4
+          difficulty: 4,
+          categories: ['web'],
+          type: "Framework",
+          url: "https://angular.io"
         },
         { 
           name: "Vue", 
           desc: "Progressive JavaScript framework", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg",
-          difficulty: 2
+          difficulty: 2,
+          categories: ['web'],
+          type: "Framework",
+          url: "https://vuejs.org"
         },
         { 
           name: "Node.js", 
           desc: "JavaScript on the server", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
-          difficulty: 3
+          difficulty: 3,
+          categories: ['web'],
+          type: "Runtime",
+          url: "https://nodejs.org"
         },
         { 
           name: "Django", 
           desc: "Python web framework", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg",
-          difficulty: 3
+          difficulty: 3,
+          categories: ['web'],
+          type: "Framework",
+          url: "https://www.djangoproject.com"
         },
         { 
           name: "Ruby on Rails", 
           desc: "Developer-friendly framework", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rails/rails-original-wordmark.svg",
-          difficulty: 3
+          difficulty: 3,
+          categories: ['web'],
+          type: "Framework",
+          url: "https://rubyonrails.org"
         }
       ],
       ai: [
@@ -779,49 +846,73 @@
           name: "Python", 
           desc: "Primary language for ML/AI", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
-          difficulty: 2
+          difficulty: 2,
+          categories: ['ai', 'data', 'web', 'game'],
+          type: "Language",
+          url: "https://www.python.org"
         },
         { 
           name: "R", 
           desc: "Statistical computing", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/r/r-original.svg",
-          difficulty: 3
+          difficulty: 3,
+          categories: ['ai', 'data'],
+          type: "Language",
+          url: "https://www.r-project.org"
         },
         { 
           name: "TensorFlow", 
           desc: "Machine learning framework", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg",
-          difficulty: 4
+          difficulty: 4,
+          categories: ['ai'],
+          type: "Library",
+          url: "https://www.tensorflow.org"
         },
         { 
           name: "PyTorch", 
           desc: "Deep learning framework", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg",
-          difficulty: 4
+          difficulty: 4,
+          categories: ['ai'],
+          type: "Library",
+          url: "https://pytorch.org"
         },
         { 
           name: "Pandas", 
           desc: "Data analysis library", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg",
-          difficulty: 2
+          difficulty: 2,
+          categories: ['ai', 'data'],
+          type: "Library",
+          url: "https://pandas.pydata.org"
         },
         { 
           name: "NumPy", 
           desc: "Numerical computing", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg",
-          difficulty: 3
+          difficulty: 3,
+          categories: ['ai', 'data'],
+          type: "Library",
+          url: "https://numpy.org"
         },
         { 
           name: "Julia", 
           desc: "High-performance computing", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/julia/julia-original.svg",
-          difficulty: 4
+          difficulty: 4,
+          categories: ['ai'],
+          type: "Language",
+          url: "https://julialang.org"
         },
         { 
           name: "OpenCV", 
           desc: "Computer vision", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg",
-          difficulty: 4
+          difficulty: 4,
+          categories: ['ai'],
+          type: "Library",
+          url: "https://opencv.org"
         }
       ],
       mobile: [
@@ -829,49 +920,73 @@
           name: "Swift", 
           desc: "iOS and macOS development", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg",
-          difficulty: 2
+          difficulty: 2,
+          categories: ['mobile'],
+          type: "Language",
+          url: "https://developer.apple.com/swift/"
         },
         { 
           name: "Kotlin", 
           desc: "Modern Android development", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg",
-          difficulty: 2
+          difficulty: 2,
+          categories: ['mobile'],
+          type: "Language",
+          url: "https://kotlinlang.org"
         },
         { 
           name: "Flutter", 
           desc: "Cross-platform framework", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg",
-          difficulty: 3
+          difficulty: 3,
+          categories: ['mobile'],
+          type: "Framework",
+          url: "https://flutter.dev"
         },
         { 
           name: "React Native", 
           desc: "JavaScript mobile apps", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-          difficulty: 3
+          difficulty: 3,
+          categories: ['mobile'],
+          type: "Framework",
+          url: "https://reactnative.dev"
         },
         { 
           name: "Java", 
           desc: "Traditional Android", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
-          difficulty: 3
+          difficulty: 3,
+          categories: ['mobile', 'web'],
+          type: "Language",
+          url: "https://www.java.com"
         },
         { 
           name: "Dart", 
           desc: "Language for Flutter", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg",
-          difficulty: 2
+          difficulty: 2,
+          categories: ['mobile'],
+          type: "Language",
+          url: "https://dart.dev"
         },
         { 
           name: "Ionic", 
           desc: "Hybrid mobile apps", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ionic/ionic-original.svg",
-          difficulty: 3
+          difficulty: 3,
+          categories: ['mobile'],
+          type: "Framework",
+          url: "https://ionicframework.com"
         },
         { 
           name: "Xamarin", 
           desc: ".NET mobile development", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/xamarin/xamarin-original.svg",
-          difficulty: 3
+          difficulty: 3,
+          categories: ['mobile'],
+          type: "Framework",
+          url: "https://dotnet.microsoft.com/apps/xamarin"
         }
       ],
       game: [
@@ -879,49 +994,73 @@
           name: "C++", 
           desc: "Game engines and performance", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg",
-          difficulty: 4
+          difficulty: 4,
+          categories: ['game'],
+          type: "Language",
+          url: "https://isocpp.org"
         },
         { 
           name: "C#", 
           desc: "Unity game development", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg",
-          difficulty: 3
+          difficulty: 3,
+          categories: ['game'],
+          type: "Language",
+          url: "https://docs.microsoft.com/en-us/dotnet/csharp/"
         },
         { 
           name: "Unity", 
           desc: "Popular game engine", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/unity/unity-original.svg",
-          difficulty: 3
+          difficulty: 3,
+          categories: ['game'],
+          type: "Engine",
+          url: "https://unity.com"
         },
         { 
           name: "Unreal", 
           desc: "AAA game engine", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/unrealengine/unrealengine-original.svg",
-          difficulty: 4
+          difficulty: 4,
+          categories: ['game'],
+          type: "Engine",
+          url: "https://www.unrealengine.com"
         },
         { 
           name: "Godot", 
           desc: "Open-source game engine", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/godot/godot-original.svg",
-          difficulty: 2
+          difficulty: 2,
+          categories: ['game'],
+          type: "Engine",
+          url: "https://godotengine.org"
         },
         { 
           name: "JavaScript", 
           desc: "Browser games", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
-          difficulty: 2
+          difficulty: 2,
+          categories: ['game', 'web'],
+          type: "Language",
+          url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
         },
         { 
           name: "Python", 
           desc: "Game scripting", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
-          difficulty: 2
+          difficulty: 2,
+          categories: ['game', 'ai', 'data', 'web'],
+          type: "Language",
+          url: "https://www.python.org"
         },
         { 
           name: "Lua", 
           desc: "Game scripting language", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/lua/lua-original.svg",
-          difficulty: 2
+          difficulty: 2,
+          categories: ['game'],
+          type: "Language",
+          url: "https://www.lua.org"
         }
       ],
       data: [
@@ -929,49 +1068,73 @@
           name: "Python", 
           desc: "Data analysis and visualization", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
-          difficulty: 2
+          difficulty: 2,
+          categories: ['data', 'ai', 'web', 'game'],
+          type: "Language",
+          url: "https://www.python.org"
         },
         { 
           name: "R", 
           desc: "Statistical computing", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/r/r-original.svg",
-          difficulty: 3
+          difficulty: 3,
+          categories: ['data', 'ai'],
+          type: "Language",
+          url: "https://www.r-project.org"
         },
         { 
           name: "SQL", 
           desc: "Database querying", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
-          difficulty: 2
+          difficulty: 2,
+          categories: ['data'],
+          type: "Language",
+          url: "https://www.mysql.com"
         },
         { 
           name: "Pandas", 
           desc: "Data manipulation", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg",
-          difficulty: 2
+          difficulty: 2,
+          categories: ['data', 'ai'],
+          type: "Library",
+          url: "https://pandas.pydata.org"
         },
         { 
           name: "NumPy", 
           desc: "Numerical computing", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg",
-          difficulty: 3
+          difficulty: 3,
+          categories: ['data', 'ai'],
+          type: "Library",
+          url: "https://numpy.org"
         },
         { 
           name: "Spark", 
           desc: "Big data processing", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apache/apache-original.svg",
-          difficulty: 4
+          difficulty: 4,
+          categories: ['data'],
+          type: "Framework",
+          url: "https://spark.apache.org"
         },
         { 
           name: "Tableau", 
           desc: "Data visualization", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tableau/tableau-original.svg",
-          difficulty: 2
+          difficulty: 2,
+          categories: ['data'],
+          type: "Tool",
+          url: "https://www.tableau.com"
         },
         { 
           name: "PowerBI", 
           desc: "Business analytics", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/powerbi/powerbi-original.svg",
-          difficulty: 2
+          difficulty: 2,
+          categories: ['data'],
+          type: "Tool",
+          url: "https://powerbi.microsoft.com"
         }
       ],
       cloud: [
@@ -979,70 +1142,135 @@
           name: "AWS", 
           desc: "Amazon Web Services", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg",
-          difficulty: 3
+          difficulty: 3,
+          categories: ['cloud'],
+          type: "Platform",
+          url: "https://aws.amazon.com"
         },
         { 
           name: "Azure", 
           desc: "Microsoft Cloud", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg",
-          difficulty: 3
+          difficulty: 3,
+          categories: ['cloud'],
+          type: "Platform",
+          url: "https://azure.microsoft.com"
         },
         { 
           name: "Google Cloud", 
           desc: "GCP services", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg",
-          difficulty: 3
+          difficulty: 3,
+          categories: ['cloud'],
+          type: "Platform",
+          url: "https://cloud.google.com"
         },
         { 
           name: "Docker", 
           desc: "Containerization", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
-          difficulty: 3
+          difficulty: 3,
+          categories: ['cloud'],
+          type: "Tool",
+          url: "https://www.docker.com"
         },
         { 
           name: "Kubernetes", 
           desc: "Container orchestration", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg",
-          difficulty: 4
+          difficulty: 4,
+          categories: ['cloud'],
+          type: "Tool",
+          url: "https://kubernetes.io"
         },
         { 
           name: "Terraform", 
           desc: "Infrastructure as code", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg",
-          difficulty: 4
+          difficulty: 4,
+          categories: ['cloud'],
+          type: "Tool",
+          url: "https://www.terraform.io"
         },
         { 
           name: "Go", 
           desc: "Cloud-native language", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg",
-          difficulty: 3
+          difficulty: 3,
+          categories: ['cloud'],
+          type: "Language",
+          url: "https://golang.org"
         },
         { 
           name: "Serverless", 
           desc: "Event-driven computing", 
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg",
-          difficulty: 3
+          difficulty: 3,
+          categories: ['cloud'],
+          type: "Framework",
+          url: "https://serverless.com"
         }
       ]
     };
+
+    // Toggle theme (light/dark mode)
+    function toggleTheme() {
+      const themeToggle = document.getElementById('themeToggle');
+      themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const icon = themeToggle.querySelector('i');
+        if (document.body.classList.contains('dark-mode')) {
+          icon.classList.remove('fa-moon');
+          icon.classList.add('fa-sun');
+          themeToggle.setAttribute('aria-label', 'Toggle light mode');
+        } else {
+          icon.classList.remove('fa-sun');
+          icon.classList.add('fa-moon');
+          themeToggle.setAttribute('aria-label', 'Toggle dark mode');
+        }
+      });
+    }
 
     // Render difficulty dots
     function renderDifficulty(difficulty) {
       let html = '';
       for (let i = 1; i <= 4; i++) {
-        html += `<div class="difficulty-dot ${i <= difficulty ? 'active' : ''}"></div>`;
+        html += `<div class="difficulty-dot ${i <= difficulty ? 'active' : ''}" aria-hidden="true"></div>`;
       }
       return html;
     }
 
-    // Render languages for a specific category
-        // Render languages for a specific category
+    // Render beginner-friendly badge
+    function renderBeginnerBadge(difficulty) {
+      return difficulty <= 2 ? `<div class="beginner-friendly" aria-label="Beginner Friendly">Beginner Friendly</div>` : '';
+    }
+
+    // Render language card
+    function renderLanguageCard(lang) {
+      return `
+        <a href="${lang.url}" class="language-card" data-lang="${lang.name.toLowerCase()}" data-type="${lang.type.toLowerCase()}" data-categories="${lang.categories.join(',')}" role="link" tabindex="0" aria-label="Learn ${lang.name}">
+          <img src="${lang.icon}" alt="${lang.name} icon" class="language-icon skeleton">
+          <h3 class="language-name">${lang.name}</h3>
+          <p class="language-desc">${lang.desc}</p>
+          <div class="difficulty" aria-label="Difficulty level ${lang.difficulty} out of 4">
+            ${renderDifficulty(lang.difficulty)}
+          </div>
+          <div class="language-meta">
+            <span class="language-type">${lang.type}</span>
+          </div>
+          ${renderBeginnerBadge(lang.difficulty)}
+        </a>
+      `;
+    }
+
+    // Render category section
     function renderCategory(categoryId, languages) {
+      console.log(`Rendering category: ${categoryId} with ${languages.length} languages`);
       const container = document.createElement('div');
       container.className = 'category-section';
       container.id = `category-${categoryId}`;
       
-      const categoryTitle =categoryId === 'popular' ? 'Popular Languages' : 
+      const categoryTitle = categoryId === 'popular' ? 'Popular Languages' : 
                           categoryId === 'web' ? 'Web Development' :
                           categoryId === 'ai' ? 'AI & Machine Learning' :
                           categoryId === 'mobile' ? 'Mobile Development' :
@@ -1053,22 +1281,13 @@
       let html = `
         <div class="category-header">
           <h2 class="category-title">${categoryTitle}</h2>
-          <a href="#" class="view-all">View all <i class="fas fa-chevron-right"></i></a>
+          <a href="#" class="view-all" aria-label="View all ${categoryTitle}">View all <i class="fas fa-chevron-right"></i></a>
         </div>
         <div class="languages-grid">
       `;
       
       languages.forEach(lang => {
-        html += `
-          <div class="language-card" data-lang="${lang.name.toLowerCase()}">
-            <img src="${lang.icon}" alt="${lang.name}" class="language-icon">
-            <h3 class="language-name">${lang.name}</h3>
-            <p class="language-desc">${lang.desc}</p>
-            <div class="difficulty">
-              ${renderDifficulty(lang.difficulty)}
-            </div>
-          </div>
-        `;
+        html += renderLanguageCard(lang);
       });
       
       html += `</div>`;
@@ -1076,74 +1295,185 @@
       return container;
     }
 
-    // Filter languages by category
+    // Filter and render languages
     function filterLanguages(category) {
       const container = document.getElementById('categoriesContainer');
+      if (!container) {
+        console.error('Categories container not found!');
+        return;
+      }
       container.innerHTML = '';
       
+      console.log(`Filtering languages for category: ${category}`);
+      
       if (category === 'all') {
-        // Show all categories
+        // Render all categories
+        let totalLanguages = 0;
         for (const [categoryId, languages] of Object.entries(allLanguages)) {
-          container.appendChild(renderCategory(categoryId, languages));
+          if (languages.length > 0) {
+            container.appendChild(renderCategory(categoryId, languages));
+            totalLanguages += languages.length;
+          }
+        }
+        console.log(`Total languages rendered (all categories): ${totalLanguages}`);
+        if (totalLanguages === 0) {
+          container.innerHTML = `
+            <div class="empty-state">
+              <i class="fas fa-folder-open"></i>
+              <p>No languages available to display.</p>
+            </div>
+          `;
         }
       } else {
-        // Show only the selected category
-        container.appendChild(renderCategory(category, allLanguages[category]));
+        // Render only the selected category
+        if (allLanguages[category] && allLanguages[category].length > 0) {
+          container.appendChild(renderCategory(category, allLanguages[category]));
+          console.log(`Languages rendered for ${category}: ${allLanguages[category].length}`);
+        } else {
+          container.innerHTML = `
+            <div class="empty-state">
+              <i class="fas fa-folder-open"></i>
+              <p>No languages available in this category.</p>
+            </div>
+          `;
+          console.log(`No languages found for category: ${category}`);
+        }
       }
-      
-      // Add click event to language cards
-      document.querySelectorAll('.language-card').forEach(card => {
-        card.addEventListener('click', () => {
-          const langName = card.getAttribute('data-lang');
-          alert(`Starting learning path for ${langName}!`);
-          // In a real app, this would navigate to the language's learning page
+
+      // Apply search filter if there's an active search term
+      const searchInput = document.getElementById('searchInput');
+      const searchTerm = searchInput.value.toLowerCase().trim();
+      if (searchTerm) {
+        console.log(`Applying search filter with term: "${searchTerm}"`);
+        applySearchFilter(searchTerm);
+      }
+
+      // Remove skeleton loading after a short delay
+      setTimeout(() => {
+        document.querySelectorAll('.language-icon.skeleton').forEach(el => {
+          el.classList.remove('skeleton');
         });
-      });
+      }, 1000);
     }
 
-    // Initialize the app with all languages
-    filterLanguages('all');
-
-    // Category tab switching
-    const categoryTabs = document.querySelectorAll('.category-tab');
-    categoryTabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        categoryTabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        filterLanguages(tab.getAttribute('data-category'));
-      });
-    });
-
-    // Search functionality
-    const searchInput = document.querySelector('.search-input');
-    searchInput.addEventListener('input', (e) => {
-      const searchTerm = e.target.value.toLowerCase();
+    // Apply search filter
+    function applySearchFilter(searchTerm) {
+      const container = document.getElementById('categoriesContainer');
+      let hasResults = false;
+      let visibleCards = 0;
+      
+      console.log(`Filtering cards with search term: "${searchTerm}"`);
       
       document.querySelectorAll('.language-card').forEach(card => {
         const langName = card.querySelector('.language-name').textContent.toLowerCase();
         const langDesc = card.querySelector('.language-desc').textContent.toLowerCase();
+        const langType = card.getAttribute('data-type').toLowerCase();
+        const langCategories = card.getAttribute('data-categories').toLowerCase();
         
-        if (langName.includes(searchTerm) || langDesc.includes(searchTerm)) {
+        if (
+          langName.includes(searchTerm) ||
+          langDesc.includes(searchTerm) ||
+          langType.includes(searchTerm) ||
+          langCategories.includes(searchTerm)
+        ) {
           card.style.display = 'flex';
+          hasResults = true;
+          visibleCards++;
         } else {
           card.style.display = 'none';
         }
       });
-    });
 
-    // Help FAB button
-    const helpFab = document.getElementById('helpFab');
-    helpFab.addEventListener('click', () => {
-      alert("Need help? Browse our tutorials or contact support!");
-    });
+      console.log(`Visible cards after search: ${visibleCards}`);
 
-    // Simulate loading (for demo purposes)
-    setTimeout(() => {
-      document.querySelectorAll('.skeleton').forEach(el => {
-        el.classList.remove('skeleton');
+      // Show empty state if no results
+      if (!hasResults && searchTerm) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-search"></i>
+            <p>No languages found for "${searchTerm}". Try a different term or check your spelling.</p>
+          </div>
+        `;
+        console.log(`No matches found for search term: "${searchTerm}"`);
+      }
+    }
+
+    // Handle category tab switching
+    function setupCategoryTabs() {
+      const categoryTabs = document.querySelectorAll('.category-tab');
+      categoryTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          categoryTabs.forEach(t => {
+            t.classList.remove('active');
+            t.setAttribute('aria-selected', 'false');
+          });
+          tab.classList.add('active');
+          tab.setAttribute('aria-selected', 'true');
+          const category = tab.getAttribute('data-category');
+          console.log(`Category tab clicked: ${category}`);
+          filterLanguages(category);
+        });
       });
-    }, 1500);
-    
+    }
+
+    // Handle search functionality
+    function setupSearch() {
+      const searchInput = document.getElementById('searchInput');
+      const clearSearch = document.getElementById('clearSearch');
+      
+      // Ensure search input is empty on page load
+      searchInput.value = '';
+      
+      searchInput.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase().trim();
+        clearSearch.style.display = searchTerm ? 'block' : 'none';
+        console.log(`Search input changed: "${searchTerm}"`);
+        applySearchFilter(searchTerm);
+      });
+
+      clearSearch.addEventListener('click', () => {
+        searchInput.value = '';
+        clearSearch.style.display = 'none';
+        console.log('Search cleared');
+        const activeTab = document.querySelector('.category-tab.active');
+        filterLanguages(activeTab.getAttribute('data-category'));
+      });
+    }
+
+    // Handle help FAB button
+    function setupHelpFab() {
+      const helpFab = document.getElementById('helpFab');
+      helpFab.addEventListener('click', () => {
+        alert("Need help? Browse our tutorials or contact support!");
+      });
+    }
+
+    // Initialize the app
+    function init() {
+      console.log('Initializing app...');
+      toggleTheme();
+      setupCategoryTabs();
+      setupSearch();
+      setupHelpFab();
+      filterLanguages('all');
+      console.log('App initialized');
+    }
+
+    // Run initialization with error handling
+    try {
+      init();
+    } catch (error) {
+      console.error('Error during initialization:', error);
+      const container = document.getElementById('categoriesContainer');
+      if (container) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p>An error occurred while loading languages. Please refresh the page.</p>
+          </div>
+        `;
+      }
+    }
   </script>
 </body>
 </html>

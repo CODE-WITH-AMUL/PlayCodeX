@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{{user.username}}'s Profile</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --warning: #f72585;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --safe-area-inset-top: env(safe-area-inset-top);
+            --safe-area-inset-bottom: env(safe-area-inset-bottom);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            padding-top: var(--safe-area-inset-top);
+            padding-bottom: var(--safe-area-inset-bottom);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #ddd;
+            position: sticky;
+            top: 0;
+            background-color: var(--light);
+            z-index: 100;
+            padding-top: 0.5rem;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .avatar-container {
+            position: relative;
+            flex-shrink: 0;
+        }
+        
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent);
+        }
+        
+        @media (min-width: 768px) {
+            .avatar {
+                width: 120px;
+                height: 120px;
+            }
+        }
+        
+        .edit-avatar {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            background-color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--box-shadow);
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+        }
+        
+        .profile-info {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .profile-name {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        @media (min-width: 768px) {
+            .profile-name {
+                font-size: 1.8rem;
+            }
+        }
+        
+        .profile-title {
+            color: #666;
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+        }
+        
+        .profile-bio {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        
+        .profile-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .social-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+        
+        .social-link {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            border: none;
+        }
+        
+        .social-link:hover {
+            background-color: var(--accent);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .edit-profile-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+        
+        .edit-profile-btn:hover {
+            background-color: var(--secondary);
+        }
+        
+        .profile-section {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .section-title {
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+            color: var(--secondary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-title h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .edit-section-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.3rem;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.2rem;
+        }
+        
+        @media (max-width: 480px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .info-item {
+            margin-bottom: 1rem;
+        }
+        
+        .info-label {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 0.3rem;
+            font-weight: 500;
+        }
+        
+        .info-value {
+            font-weight: 500;
+            word-break: break-word;
+        }
+        
+        .editable-field {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .editable-field input, 
+        .editable-field textarea {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-family: inherit;
+            font-size: 1rem;
+        }
+        
+        .editable-field textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .save-btn {
+            background-color: var(--success);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 1.5rem;
+            position: relative;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #666;
+            z-index: 1;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-family: inherit;
+            font-size: 1rem;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .btn {
+            padding: 0.8rem 1.2rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            min-width: 100px;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary);
+        }
+        
+        .btn-secondary {
+            background-color: white;
+            color: var(--dark);
+            border: 1px solid #ddd;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--dark);
+            color: white;
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
+            z-index: 1001;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            max-width: 90%;
+            text-align: center;
+        }
+        
+        .toast.show {
+            opacity: 1;
+        }
+        
+        .install-prompt {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1002;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .install-prompt.show {
+            transform: translateY(0);
+        }
+        
+        .install-prompt button {
+            background-color: white;
+            color: var(--primary);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+        }
+        
+        .spinner {
+            display: none;
+            width: 40px;
+            height: 40px;
+            margin: 0 auto;
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .email-list {
+            margin-top: 1rem;
+        }
+        
+        .email-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .email-item:last-child {
+            border-bottom: none;
+        }
+        
+        .email-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .email-primary {
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .email-verified {
+            color: var(--success);
+            font-size: 0.8rem;
+        }
+        
+        .email-unverified {
+            color: var(--warning);
+            font-size: 0.8rem;
+        }
+        
+        .add-to-home {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .add-to-home.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>My Profile</h1>
+        </header>
+        
+        <div class="profile-header">
+            <div class="avatar-container">
+                <img src="{% if user.profile.avatar %}{{ user.profile.avatar.url }}{% else %}data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=={% endif %}" alt="Profile Picture" class="avatar" id="profileAvatar">
+                <button class="edit-avatar" onclick="openAvatarModal()">✏️</button>
+            </div>
+            
+            <div class="profile-info">
+                <h1 class="profile-name" id="profileName">{{user.username}}</h1>
+                <p class="profile-title" id="profileTitle">Web Developer</p>
+                <p class="profile-bio" id="profileBio">Hello! I'm learning to code and excited to improve my skills.</p>
+                
+                <div class="profile-meta">
+                    <div class="meta-item">
+                        <span>📧</span>
+                        <span id="profileEmail">{{user.email}}</span>
+                    </div>
+                    <div class="meta-item">
+                        <span>📅</span>
+                        <span>{{ user.date_joined|date:"F j, Y" }}</span>
+                    </div>
+                <div class="info-item">
+                    <div class="info-label">Location</div>
+                    <div class="info-value" id="personalLocation">{% if user.profile.location %}{{ user.profile.location }}{% else %}Not set{% endif %}</div>
+
+                </div>
+                
+                <div class="social-links">
+                    <a href="https://github.com/johndoe" class="social-link" target="_blank" id="githubLinkDisplay">GitHub</a>
+                    <button class="edit-profile-btn" onclick="openSocialLinksModal()">
+                        <span>+</span>
+                        <span>Add Links</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-section">
+            <div class="section-title">
+                <h2>Personal Information</h2>
+                <button class="edit-section-btn" onclick="openPersonalInfoModal()">
+                    <span>✏️</span>
+                    <span>Edit</span>
+                </button>
+            </div>
+            
+            <div class="info-grid">
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">Full Name</div>
+                    <div class="info-value" id="personalFullName">{{ user.get_full_name|default:"Not set" }}</div>
+                <div class="info-item">
+                    <div class="info-label">Username</div>
+                    <div class="info-value">johndoe</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Location</div>
+                    <div class="info-value" id="personalLocation">Not set</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Title</div>
+                    <div class="info-value" id="personalTitle">Not set</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Member Since</div>
+                    <div class="info-value">May 1, 2024</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-section">
+            <div class="section-title">
+                <h2>Email Addresses</h2>
+                <button class="edit-section-btn" onclick="openEmailManagementModal()">
+                    <span>✏️</span>
+                    <span>Manage</span>
+                </button>
+            </div>
+            
+            <div class="email-list">
+                <div class="email-item">
+                    <div>
+                        <span class="email-primary">john.doe@example.com</span>
+                        <div class="email-verified">✓ Primary & Verified</div>
+                    </div>
+                    <div class="email-actions">
+                        <button class="btn-secondary" style="padding: 0.3rem 0.6rem;" onclick="changePrimaryEmail('john.doe@example.com')">Make Primary</button>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="edit-profile-btn" style="margin-top: 1rem;" onclick="openAddEmailModal()">
+                <span>+</span>
+                <span>Add Email Address</span>
+            </button>
+        </div>
+        
+        <div class="profile-section">
+            <div class="section-title">
+                <h2>About Me</h2>
+                <button class="edit-section-btn" onclick="openAboutModal()">
+                    <span>✏️</span>
+                    <span>Edit</span>
+                </button>
+            </div>
+            
+            <div class="info-item">
+                <div class="info-value" id="aboutMeContent">
+                    <p>Tell us something about yourself! What are your interests, goals, or what brought you to coding?</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast Notification -->
+    <div class="toast" id="toastNotification"></div>
+    
+    <!-- Avatar Upload Modal -->
+    <div class="modal" id="avatarModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeAvatarModal()">×</button>
+            <h2>Update Profile Picture</h2>
+            
+            <form id="avatarForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="avatarUpload">Choose an image</label>
+                    <input type="file" id="avatarUpload" name="avatar" accept="image/*" required>
+                </div>
+                
+                <div class="spinner" id="avatarSpinner"></div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeAvatarModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Personal Info Modal -->
+    <div class="modal" id="personalInfoModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closePersonalInfoModal()">×</button>
+            <h2>Edit Personal Information</h2>
+            
+            <form id="personalInfoForm">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" value="John" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" value="Doe" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="userTitle">Title</label>
+                    <input type="text" id="userTitle" value="">
+                </div>
+                
+                <div class="form-group">
+                    <label for="userLocation">Location</label>
+                    <input type="text" id="userLocation" value="">
+                </div>
+                
+                <div class="spinner" id="personalInfoSpinner"></div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closePersonalInfoModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- About Me Modal -->
+    <div class="modal" id="aboutModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeAboutModal()">×</button>
+            <h2>Edit About Me</h2>
+            
+            <form id="aboutForm">
+                <div class="form-group">
+                    <label for="aboutMe">Tell us about yourself</label>
+                    <textarea id="aboutMe" rows="8"></textarea>
+                </div>
+                
+                <div class="spinner" id="aboutSpinner"></div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeAboutModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Social Links Modal -->
+    <div class="modal" id="socialLinksModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeSocialLinksModal()">×</button>
+            <h2>Edit Social Links</h2>
+            
+            <form id="socialLinksForm">
+                <div class="form-group">
+                    <label for="githubLink">GitHub</label>
+                    <input type="url" id="githubLink" value="https://github.com/johndoe" placeholder="https://github.com/yourusername">
+                </div>
+                
+                <div class="form-group">
+                    <label for="linkedinLink">LinkedIn</label>
+                    <input type="url" id="linkedinLink" value="" placeholder="https://linkedin.com/in/yourprofile">
+                </div>
+                
+                <div class="form-group">
+                    <label for="twitterLink">Twitter/X</label>
+                    <input type="url" id="twitterLink" value="" placeholder="https://twitter.com/yourhandle">
+                </div>
+                
+                <div class="form-group">
+                    <label for="websiteLink">Personal Website</label>
+                    <input type="url" id="websiteLink" value="" placeholder="https://yourwebsite.com">
+                </div>
+                
+                <div class="spinner" id="socialLinksSpinner"></div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeSocialLinksModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Email Management Modal -->
+    <div class="modal" id="emailManagementModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeEmailManagementModal()">×</button>
+            <h2>Manage Email Addresses</h2>
+            
+            <div class="email-list">
+                <div class="email-item">
+                    <div>
+                        <span class="email-primary">john.doe@example.com</span>
+                        <div class="email-verified">✓ Primary & Verified</div>
+                    </div>
+                    <div class="email-actions">
+                        <button class="btn-secondary" style="padding: 0.3rem 0.6rem;" disabled>Primary</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-actions" style="margin-top: 1.5rem;">
+                <button type="button" class="btn btn-secondary" onclick="closeEmailManagementModal()">Close</button>
+                <button type="button" class="btn btn-primary" onclick="openAddEmailModal()">Add Email</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Email Modal -->
+    <div class="modal" id="addEmailModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeAddEmailModal()">×</button>
+            <h2>Add Email Address</h2>
+            
+            <form id="addEmailForm">
+                <div class="form-group">
+                    <label for="newEmail">Email Address</label>
+                    <input type="email" id="newEmail" placeholder="Enter your new email address" required>
+                </div>
+                
+                <div class="spinner" id="addEmailSpinner"></div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeAddEmailModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Email</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- PWA Install Prompt -->
+    <div class="install-prompt" id="installPrompt">
+        <div>Install this app for a better experience</div>
+        <button id="installButton">Install</button>
+    </div>
+    
+    <!-- Add to Home Screen for iOS -->
+    <div class="add-to-home" id="addToHome">
+        <span>+</span>
+    </div>
+    
+    <script>
+        // Service Worker Registration for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js').then(
+                    function(registration) {
+                        console.log('ServiceWorker registration successful');
+                    },
+                    function(err) {
+                        console.log('ServiceWorker registration failed: ', err);
+                    }
+                );
+            });
+        }
+        
+        // Modal functions
+        function openAvatarModal() {
+            document.getElementById('avatarModal').style.display = 'flex';
+        }
+        
+        function closeAvatarModal() {
+            document.getElementById('avatarModal').style.display = 'none';
+        }
+        
+        function openPersonalInfoModal() {
+            document.getElementById('personalInfoModal').style.display = 'flex';
+        }
+        
+        function closePersonalInfoModal() {
+            document.getElementById('personalInfoModal').style.display = 'none';
+        }
+        
+        function openAboutModal() {
+            document.getElementById('aboutModal').style.display = 'flex';
+        }
+        
+        function closeAboutModal() {
+            document.getElementById('aboutModal').style.display = 'none';
+        }
+        
+        function openSocialLinksModal() {
+            document.getElementById('socialLinksModal').style.display = 'flex';
+        }
+        
+        function closeSocialLinksModal() {
+            document.getElementById('socialLinksModal').style.display = 'none';
+        }
+        
+        function openEmailManagementModal() {
+            document.getElementById('emailManagementModal').style.display = 'flex';
+        }
+        
+        function closeEmailManagementModal() {
+            document.getElementById('emailManagementModal').style.display = 'none';
+        }
+        
+        function openAddEmailModal() {
+            document.getElementById('addEmailModal').style.display = 'flex';
+            closeEmailManagementModal();
+        }
+        
+        function closeAddEmailModal() {
+            document.getElementById('addEmailModal').style.display = 'none';
+        }
+        
+        // Show toast notification
+        function showToast(message, duration = 3000) {
+            const toast = document.getElementById('toastNotification');
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, duration);
+        }
+        
+        // Form submissions with AJAX simulation
+        document.getElementById('personalInfoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const spinner = document.getElementById('personalInfoSpinner');
+            spinner.style.display = 'block';
+            
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const title = document.getElementById('userTitle').value;
+            const location = document.getElementById('userLocation').value;
+            
+            setTimeout(() => {
+                document.getElementById('profileName').textContent = `${firstName} ${lastName}`;
+                document.getElementById('personalFullName').textContent = `${firstName} ${lastName}`;
+                document.getElementById('profileTitle').textContent = title || 'Not set';
+                document.getElementById('personalTitle').textContent = title || 'Not set';
+                document.getElementById('profileLocation').textContent = location || 'Unknown location';
+                document.getElementById('personalLocation').textContent = location || 'Not set';
+                
+                localStorage.setItem('profile_firstName', firstName);
+                localStorage.setItem('profile_lastName', lastName);
+                localStorage.setItem('profile_title', title);
+                localStorage.setItem('profile_location', location);
+                
+                spinner.style.display = 'none';
+                closePersonalInfoModal();
+                showToast('Personal information updated successfully!');
+            }, 1000);
+        });
+        
+        document.getElementById('aboutForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const spinner = document.getElementById('aboutSpinner');
+            spinner.style.display = 'block';
+            
+            const aboutMe = document.getElementById('aboutMe').value;
+            
+            setTimeout(() => {
+                document.getElementById('aboutMeContent').innerHTML = aboutMe.replace(/\n/g, '<br>') || '<p>Tell us something about yourself! What are your interests, goals, or what brought you to coding?</p>';
+                
+                localStorage.setItem('profile_aboutMe', aboutMe);
+                
+                spinner.style.display = 'none';
+                closeAboutModal();
+                showToast('About me section updated successfully!');
+            }, 1000);
+        });
+        
+        document.getElementById('socialLinksForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const spinner = document.getElementById('socialLinksSpinner');
+            spinner.style.display = 'block';
+            
+            const github = document.getElementById('githubLink').value;
+            const linkedin = document.getElementById('linkedinLink').value;
+            const twitter = document.getElementById('twitterLink').value;
+            const website = document.getElementById('websiteLink').value;
+            
+            setTimeout(() => {
+                updateSocialLinkDisplay('githubLinkDisplay', github, 'GitHub');
+                updateSocialLinkDisplay('linkedinLinkDisplay', linkedin, 'LinkedIn');
+                updateSocialLinkDisplay('twitterLinkDisplay', twitter, 'Twitter');
+                updateSocialLinkDisplay('websiteLinkDisplay', website, 'Website');
+                
+                localStorage.setItem('profile_github', github);
+                localStorage.setItem('profile_linkedin', linkedin);
+                localStorage.setItem('profile_twitter', twitter);
+                localStorage.setItem('profile_website', website);
+                
+                spinner.style.display = 'none';
+                closeSocialLinksModal();
+                showToast('Social links updated successfully!');
+            }, 1000);
+        });
+        
+        function updateSocialLinkDisplay(elementId, url, defaultText) {
+            const element = document.getElementById(elementId);
+            if (url) {
+                if (!element) {
+                    const container = document.querySelector('.social-links');
+                    const newLink = document.createElement('a');
+                    newLink.id = elementId;
+                    newLink.href = url;
+                    newLink.className = 'social-link';
+                    newLink.textContent = defaultText;
+                    newLink.target = '_blank';
+                    const addButton = document.querySelector('.social-links .edit-profile-btn');
+                    container.insertBefore(newLink, addButton);
+                } else {
+                    element.href = url;
+                }
+            } else if (element) {
+                element.remove();
+            }
+        }
+        
+        document.getElementById('avatarForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const spinner = document.getElementById('avatarSpinner');
+            spinner.style.display = 'block';
+            
+            const fileInput = document.getElementById('avatarUpload');
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    setTimeout(() => {
+                        const avatar = document.getElementById('profileAvatar');
+                        avatar.src = e.target.result;
+                        
+                        localStorage.setItem('profile_avatar', e.target.result);
+                        
+                        spinner.style.display = 'none';
+                        closeAvatarModal();
+                        showToast('Profile picture updated successfully!');
+                    }, 1500);
+                };
+                
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        });
+        
+        document.getElementById('addEmailForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const spinner = document.getElementById('addEmailSpinner');
+            spinner.style.display = 'block';
+            
+            const newEmail = document.getElementById('newEmail').value;
+            
+            setTimeout(() => {
+                spinner.style.display = 'none';
+                closeAddEmailModal();
+                showToast(`Verification email sent to ${newEmail}. Please check your inbox.`);
+                document.getElementById('newEmail').value = '';
+            }, 1500);
+        });
+        
+        function changePrimaryEmail(email) {
+            showToast(`Primary email changed to ${email}`);
+        }
+        
+        // PWA Install Prompt
+        let deferredPrompt;
+        const installPrompt = document.getElementById('installPrompt');
+        const installButton = document.getElementById('installButton');
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installPrompt.classList.add('show');
+        });
+        
+        installButton.addEventListener('click', () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    } else {
+                        console.log('User dismissed the install prompt');
+                    }
+                    deferredPrompt = null;
+                    installPrompt.classList.remove('show');
+                });
+            }
+        });
+        
+        // Add to Home Screen for iOS
+        const addToHome = document.getElementById('addToHome');
+        let addToHomeShown = false;
+        
+        window.addEventListener('load', () => {
+            if (window.matchMedia('(display-mode: browser)').matches && !localStorage.getItem('addToHomeShown')) {
+                setTimeout(() => {
+                    addToHome.classList.add('show');
+                    addToHomeShown = true;
+                }, 3000);
+                
+                addToHome.addEventListener('click', () => {
+                    addToHome.classList.remove('show');
+                    localStorage.setItem('addToHomeShown', 'true');
+                });
+            }
+        });
+        
+        // Load saved data from localStorage on page load
+        window.addEventListener('load', () => {
+            const firstName = localStorage.getItem('profile_firstName') || 'John';
+            const lastName = localStorage.getItem('profile_lastName') || 'Doe';
+            const title = localStorage.getItem('profile_title') || '';
+            const location = localStorage.getItem('profile_location') || '';
+            const aboutMe = localStorage.getItem('profile_aboutMe') || '';
+            const github = localStorage.getItem('profile_github') || 'https://github.com/johndoe';
+            const linkedin = localStorage.getItem('profile_linkedin') || '';
+            const twitter = localStorage.getItem('profile_twitter') || '';
+            const website = localStorage.getItem('profile_website') || '';
+            const avatar = localStorage.getItem('profile_avatar') || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==';
+            
+            if (firstName || lastName) document.getElementById('profileName').textContent = `${firstName} ${lastName}`;
+            if (title) document.getElementById('profileTitle').textContent = title || 'Web Developer';
+            if (location) document.getElementById('profileLocation').textContent = location || 'Unknown location';
+            if (aboutMe) document.getElementById('aboutMeContent').innerHTML = aboutMe.replace(/\n/g, '<br>') || '<p>Tell us something about yourself! What are your interests, goals, or what brought you to coding?</p>';
+            
+            document.getElementById('personalFullName').textContent = `${firstName} ${lastName}` || 'Not set';
+            document.getElementById('personalTitle').textContent = title || 'Not set';
+            document.getElementById('personalLocation').textContent = location || 'Not set';
+            
+            document.getElementById('profileAvatar').src = avatar;
+            updateSocialLinkDisplay('githubLinkDisplay', github, 'GitHub');
+            updateSocialLinkDisplay('linkedinLinkDisplay', linkedin, 'LinkedIn');
+            updateSocialLinkDisplay('twitterLinkDisplay', twitter, 'Twitter');
+            updateSocialLinkDisplay('websiteLinkDisplay', website, 'Website');
+            
+            document.getElementById('firstName').value = firstName;
+            document.getElementById('lastName').value = lastName;
+            document.getElementById('userTitle').value = title;
+            document.getElementById('userLocation').value = location;
+            document.getElementById('aboutMe').value = aboutMe;
+            document.getElementById('githubLink').value = github;
+            document.getElementById('linkedinLink').value = linkedin;
+            document.getElementById('twitterLink').value = twitter;
+            document.getElementById('websiteLink').value = website;
+        });
+    </script>
+</body>
+</html>

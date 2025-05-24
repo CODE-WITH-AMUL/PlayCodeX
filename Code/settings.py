@@ -16,9 +16,15 @@ INSTALLED_APPS = [
 EXTRA_APPS = [
     'core',
     'loginprocess',
+    'main', 
 ]
 
-INSTALLED_APPS += EXTRA_APPS
+
+CODE_APPS_PATH = [
+    'popularlanguage',
+]
+
+INSTALLED_APPS += EXTRA_APPS + CODE_APPS_PATH
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -82,9 +88,12 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR / "static" ]
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / "media"  # ✅ Correct: MEDIA_ROOT should be a Path object, not a list
+
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
